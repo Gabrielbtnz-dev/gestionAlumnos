@@ -1,4 +1,4 @@
-package domain;
+package com.gestionalumnos.gestionalumnos.domain;
 
 import jakarta.persistence.*;
 
