@@ -4,10 +4,7 @@ import com.gestionalumnos.gestionalumnos.domain.Alumno;
 import com.gestionalumnos.gestionalumnos.model.AlumnoRepository;
 import jakarta.persistence.Entity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
@@ -31,6 +28,12 @@ public class alumnoRestController {
         return alumnoRepo.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity<String> postAlumnos(@RequestBody Alumno alumno){
+        alumnoRepo.save(alumno);
+        return ResponseEntity.ok("Cliente Agregado con exito");
     }
 
 
