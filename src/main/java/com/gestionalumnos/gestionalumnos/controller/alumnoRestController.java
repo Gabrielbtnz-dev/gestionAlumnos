@@ -24,7 +24,7 @@ public class alumnoRestController {
         return alumnoRepo.findAll();
     }
 
-    @GetMapping("/buscar/{id}")
+    @GetMapping("/search/{id}")
     public ResponseEntity<Alumno> GetBuscarPorId(@PathVariable long id){
         return alumnoRepo.findById(id)
                 .map(ResponseEntity::ok)
@@ -40,7 +40,7 @@ public class alumnoRestController {
         return ResponseEntity.ok("Cliente Agregado con exito");
     }
 
-    @DeleteMapping("/eliminar/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteAlumno(@PathVariable long id){
         return alumnoRepo.findById(id)
                 .map(alumno -> {
@@ -51,7 +51,7 @@ public class alumnoRestController {
                         .body("Alumno con id " + id + " no encontrado"));
     }
 
-    @PatchMapping("/actualizar/{id}")
+    @PatchMapping("/update/{id}")
     public ResponseEntity<String> patchAlumno(@RequestBody Alumno alumno, @PathVariable Long id) {
        return alumnoRepo.findById(id)
                 .map(alumnoExistente->{
