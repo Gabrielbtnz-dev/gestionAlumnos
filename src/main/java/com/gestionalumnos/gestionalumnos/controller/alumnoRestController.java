@@ -2,10 +2,10 @@ package com.gestionalumnos.gestionalumnos.controller;
 
 import com.gestionalumnos.gestionalumnos.domain.Alumno;
 import com.gestionalumnos.gestionalumnos.model.AlumnoRepository;
-import jakarta.persistence.Entity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.gestionalumnos.gestionalumnos.service.AlumnoService;
 
 import java.util.List;
 @RestController
@@ -15,20 +15,21 @@ public class alumnoRestController {
     /*Repositorio de la tabla Alumnos*/
     private final AlumnoRepository alumnoRepo;
 
-    public alumnoRestController(AlumnoRepository alumnoRepo) {
+    private final AlumnoService alumnoService;
+
+    public alumnoRestController(AlumnoRepository alumnoRepo, AlumnoService alumnoService) {
         this.alumnoRepo = alumnoRepo;
+        this.alumnoService = alumnoService;
     }
 
     @GetMapping
     public List<Alumno> getAlumno(){
-        return alumnoRepo.findAll();
+        return alumnoService.getAlumno();
     }
 
     @GetMapping("/search/{id}")
     public ResponseEntity<Alumno> GetBuscarPorId(@PathVariable long id){
-        return alumnoRepo.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return alumnoService.GetBuscarPorId(id);
     }
 
     @PostMapping
@@ -76,8 +77,5 @@ public class alumnoRestController {
                 .body("Alumno con id " + id + " no encontrado"));
 
     }
-
-
-
 
 }
