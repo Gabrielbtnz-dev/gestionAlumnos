@@ -24,7 +24,7 @@ public class alumnoRestController {
         return alumnoRepo.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/buscar/{id}")
     public ResponseEntity<Alumno> GetBuscarPorId(@PathVariable long id){
         return alumnoRepo.findById(id)
                 .map(ResponseEntity::ok)
@@ -33,11 +33,14 @@ public class alumnoRestController {
 
     @PostMapping
     public ResponseEntity<String> postAlumnos(@RequestBody Alumno alumno){
+        if (alumno.getId() > 0){
+            return ResponseEntity.badRequest().body("Para agregar nuevos alumnos no envies el id");
+        }
         alumnoRepo.save(alumno);
         return ResponseEntity.ok("Cliente Agregado con exito");
     }
 
-        @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<String> deleteAlumno(@PathVariable long id){
         return alumnoRepo.findById(id)
                 .map(alumno -> {
@@ -47,6 +50,34 @@ public class alumnoRestController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body("Alumno con id " + id + " no encontrado"));
     }
+
+    @PatchMapping("/actualizar/{id}")
+    public ResponseEntity<String> patchAlumno(@RequestBody Alumno alumno, @PathVariable Long id) {
+       return alumnoRepo.findById(id)
+                .map(alumnoExistente->{
+            if (alumno.getNombre() != null){
+                alumnoExistente.setNombre(alumno.getNombre());
+            }
+            if (alumno.getEdad() != null){
+                alumnoExistente.setEdad(alumno.getEdad());
+            }
+
+            if(alumno.getCurso() != null){
+                alumnoExistente.setCurso(alumno.getCurso());
+            }
+
+            if(alumno.getEmail() != null){
+                alumnoExistente.setEmail(alumno.getEmail());
+            }
+            alumnoRepo.save(alumnoExistente);
+            return ResponseEntity.ok("Modificado con exito");
+        })
+        .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Alumno con id " + id + " no encontrado"));
+
+    }
+
+
 
 
 }

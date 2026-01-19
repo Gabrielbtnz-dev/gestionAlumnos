@@ -10,14 +10,14 @@ public class Alumno {
     private long id;
     private String nombre;
     private String email;
-    private int edad;
+    private Integer edad;
     private String curso;
 
     public Alumno(){
 
     }
 
-    public Alumno(String nombre,String email,int edad,String curso){
+    public Alumno(String nombre,String email,Integer edad,String curso){
         this.nombre = nombre;
         this.email = email;
         this.edad = edad;
@@ -48,11 +48,11 @@ public class Alumno {
         this.email = email;
     }
 
-    public int getEdad() {
+    public Integer getEdad() {
         return edad;
     }
 
-    public void setEdad(int edad) {
+    public void setEdad(Integer edad) {
         this.edad = edad;
     }
 
