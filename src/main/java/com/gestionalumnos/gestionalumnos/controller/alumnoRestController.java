@@ -11,13 +11,9 @@ import java.util.List;
 @RequestMapping("/alumnos")
 public class alumnoRestController {
 
-    /*Repositorio de la tabla Alumnos*/
-    private final AlumnoRepository alumnoRepo;
-
     private final AlumnoService alumnoService;
 
-    public alumnoRestController(AlumnoRepository alumnoRepo, AlumnoService alumnoService) {
-        this.alumnoRepo = alumnoRepo;
+    public alumnoRestController( AlumnoService alumnoService) {
         this.alumnoService = alumnoService;
     }
 
