@@ -60,13 +60,33 @@
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>11.14.1</version>
+				<dependencies>
+					<!-- Esto es clave -->
+					<dependency>
+						<groupId>org.postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+						<version>42.5.1</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<url>jdbc:postgresql://localhost:5432/sistema</url>
+					<user>postgres</user>
+					<password>root</password>
+					<schemas>public</schemas>
+					<driver>org.postgresql.Driver</driver>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
